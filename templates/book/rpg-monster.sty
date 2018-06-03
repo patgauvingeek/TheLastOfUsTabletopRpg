@@ -1,0 +1,151 @@
+% Monster environment sty file
+\usepackage{fp}
+\usepackage{xstring}
+
+% Macro to print stats with autocomputed modifier
+% e.g. \stat{12} prints "12 (+1)"
+\newcommand{\stat}[1]{%
+   \FPeval{\mod}{(#1 - 10)/2}%
+   \FPifpos\mod%
+   \FPeval{\mod}{clip(trunc(mod,0))}#1 (+\mod)%
+   \else%
+   \FPeval{\mod}{clip(trunc(mod-0.5,0))}#1 (\mod)%
+   \fi%
+}
+
+\newcommand{\dice}[1]{%
+	\StrSubstitute{#1}{ }{}[\DiceArg]%				strip whitespaces
+	\StrCut{\DiceArg}{D}\DiceNum\DiceSides%			split string
+	\StrCut{\DiceSides}{+}\DiceSides\DiceAddMod%
+	\StrCut{\DiceSides}{-}\DiceSides\DiceSubMod%
+	\FPeval{\DiceAvg}{(\DiceSides+1)/2*\DiceNum}%	calculate avg roll	
+	\IfInteger{\DiceAddMod}{%
+		\FPadd{\DiceAvg}{\DiceAvg}{\DiceAddMod}%	add value
+		\def\DiceMod{+\ \DiceAddMod}%
+	}{%
+		\FPsub{\DiceAvg}{\DiceAvg}{\DiceSubMod}%	subtract value
+		\def\DiceMod{- \DiceSubMod}%
+	}%
+	\FPtrunc{\DiceAvg}{\DiceAvg}{0}%				round down
+	\FPprint{\DiceAvg\ (\DiceNum d\DiceSides\ \DiceMod)}%
+}
+
+% Monster box made to look like the Monster Manual NPC definitions
+\newtcolorbox{rpg-monsterboxnobg}[2][]{
+   enhanced,
+   frame hidden,
+   before skip=7pt plus2pt,
+   boxrule=0pt,
+   breakable,
+   boxsep=0.25ex,
+   toptitle=3mm,
+   left=2.5mm,
+   right=2.15mm,
+   arc=0mm,
+   opacityback=0,
+   colframe=titlered,
+   fonttitle=\scshape\bfseries\color{titlered}\Large,
+   fontupper=\fontfamily{lmss}\selectfont,
+   title=#2,
+   after={\vspace{7pt plus 1pt}\noindent},
+   #1
+}
+
+% new Monsterbox
+\newtcolorbox{rpg-monsterbox}[2][]{
+	enhanced,
+	frame hidden,
+	before skip=7pt plus2pt,
+	boxrule=0pt,
+	breakable,
+	boxsep=0.25ex,
+	toptitle=3mm,
+	left=2.5mm,
+	right=2.15mm,
+	arc=0mm,
+	borderline north={4pt}{0pt}{titlered},
+	borderline north={2.5pt}{0.75pt}{puregold},
+	borderline south={4pt}{0pt}{titlered},
+	borderline south={2.5pt}{0.75pt}{puregold},
+	colback=monstertan,
+	colbacktitle=monstertan,
+	colframe=titlered,
+	fonttitle=\scshape\bfseries\color{titlered}\Large,
+	fontupper=\fontfamily{lmss}\selectfont,
+	title=#2,
+	after={\vspace{7pt plus 1pt}\noindent},
+	#1
+}
+
+
+% Define Monster subsection header style
+%\newcommand{\rpg-monstersection}[1]{\subsubsection*{#1}}
+\newcommand{\rpgmonstersection}[1]{
+	{\par
+	\color{titlered}\normalfont\scshape\Large #1 \vspace{3pt}
+	\titleline{\color{titlered}\titlerule[0.6pt]}
+	\par\medskip}
+	}
+%\titlespacing*{\subsubsection}{0pt}{*0.5}{5pt}
+%\titleformat{\subsubsection}
+%{\color{titlered}\normalfont\scshape\Large}{\thesubsection}{1em}{}[{\color{titlered}\titlerule[0.5pt]\color{black}}]
+
+\newenvironment{rpg-monsteraction}[1][\unskip]{\emph{\textbf{#1.}}}{\vspace{0.5em}}
+
+%
+% Macros for use within the monster environment
+%
+\newkeycommand\basics[armorclass=0, hitpoints=0, speed=0]{%
+	\color{titlered}
+	\textbf{Armor Class} \commandkey{armorclass}\\
+	\textbf{Hit Points} \commandkey{hitpoints}\\
+	\textbf{Speed} \commandkey{speed}\\
+}
+
+% Taubular enviornment for stats-block
+\newkeycommand\stats[STR=10,
+                        DEX=10,
+                        CON=10,
+                        INT=10,
+                        WIS=10,
+                        CHA=10]{
+    {\footnotesize
+	\hspace*{-3.5pt}
+	\resizebox{0.97\linewidth}{\height}{
+		\begin{tabular}{cccccc}
+			\rule{0pt}{3.7mm} %adds space between hline and table
+			\textbf{STR} & \textbf{DEX} & \textbf{CON} & \textbf{INT} & \textbf{WIS} & \textbf{CHA}\\
+            \stat{\commandkey{STR}} & \stat{\commandkey{DEX}} & \stat{\commandkey{CON}} & \stat{\commandkey{INT}} & \stat{\commandkey{WIS}} & \stat{\commandkey{CHA}}
+		\end{tabular}
+	}
+	\\[0.4em] %adds space after table
+    }
+}
+
+\newkeycommand\details[skills=,
+                      damageimmunities=,
+                      savingthrows=,
+                      conditionimmunities=,
+                      damageresistances=,
+                      damagevulnerabilities=,
+                      senses=-,
+                      languages=-,
+                      challenge=0]{%
+  \ifcommandkey{savingthrows}
+    {\textbf{Saving Throws} \commandkey{savingthrows}\\}{}
+  \ifcommandkey{skills}
+    {\textbf{Skills} \commandkey{skills}\\}{}
+  \ifcommandkey{damagevulnerabilities}
+    {\textbf{Damage Vulnerabilities} \commandkey{damagevulnerabilities}\\}{}
+  \ifcommandkey{damageresistances}
+    {\textbf{Damage Resistances} \commandkey{damageresistances}\\}{}
+  \ifcommandkey{damageimmunities}
+    {\textbf{Damage Immunities} \commandkey{damageimmunities}\\}{}
+  \ifcommandkey{conditionimmunities}
+    {\textbf{Condition Immunities} \commandkey{conditionimmunities}\\}{}
+  % These traits appear to always be present.
+  {\textbf{Senses} \commandkey{senses}\\}
+  {\textbf{Languages} \commandkey{languages}\\}
+  {\textbf{Challenge} \commandkey{challenge}\\}
+\color{black}
+}
