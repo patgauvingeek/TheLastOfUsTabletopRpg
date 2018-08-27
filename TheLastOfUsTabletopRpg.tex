@@ -4,6 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
 \usepackage{multicol}
+\usepackage{tabularx}
 
 \title{The Last of Us Tabletop RPG}
 \date{\today}
@@ -19,23 +20,43 @@
 \tableofcontents
 \end{multicols}
 
+\onecolumn
+\chapter{Introduction}
+The Last of Us Tabletop RPG is base on Open Legend (see \href{http://www.openlegendrpg.com}{http://www.openlegendrpg.com}). 
+This document is a compilation of items and monsters from the video game adapted to Open Legend. It provides guide lines on 
+how to uses the Open Legend's attributes too.
+
 %
 % CHARACTER CREATION
 %
 \mainmatter
 \chapter{Character Creation}
 
-\section{Skills}
+\subsection{Attributes}
 
-\begin{rpg-list}
-  \item Bluff
-  \item Brawl
-  \item Diplomacy
-  \item Intimidate
-  \item Throw
-\end{rpg-list}
+The attribute are from Open Legend. If an attribute is not in the following table, refer to the Open Legend's definition.
 
-\subsection{Weapons}
+\begin{center}
+  \begin{tabular}{ccp{150mm}}
+    \rpgitem{} & Alteration & Used by field medic to heal wounds or to change runners into personnal servant to carry things
+                              like in The Walking Dead. \\ 
+    \rpgitem{} & Creation & used to craft survival items or to create traps \\  
+    \rpgitem{} & Energy & used to represent the ability to use a flamethrower or other energy weapon or device. At GM discretion,
+                          your character may have access to an illimitted amount of fuel. So missing fuel would be part of the
+                          story, not something that happens because the character overused the flamethrower. \\
+    \rpgitem{} & Entropy & used to manipulate the infected so they will attack other humans that stand in the way. Choosing this
+                           attribute means your character knows how to manipulate the infected using bottles and bricks. \\
+    \rpgitem{} & Influence & used like entropy to control the infected, but can also be used to control other human beings through
+                             hallucinogenic gas that your character is the only one to know the recipe. It can be an effective trick
+                             the character has to interogate someone, like Joel does when he's looking for Ellie. \\
+    \rpgitem{} & Movement & used if your fast \\
+    \rpgitem{} & Prescience & used to represent a calculative mind able to predict things before they happends. \\
+    \rpgitem{} & Protection & used to reprensent the ability to attract attention of the infected to create an invisible barrier or
+                              shielding others so they can catch their breath.
+  \end{tabular}
+\end{center}
+
+\section{Weapons}
 
 \begin{rpg-list}
   \item Blade
@@ -54,21 +75,21 @@
 
 \section{Raw Materials}
 
-\subsection{Alcohol}
+Finding raw materials will increase the wealth level which can be decrease to create extraordinary items. 
 
-\subsection{Blade}
+\begin{rpg-list}
+  \item Alcohol
+  \item Blade (cisor, knife, can)
+  \item Binding (Duct Tape, Glue)
+  \item Explosive
+  \item Fertilizer
+  \item Rag
+  \item Sugar
+\end{rpg-list}
 
-\subsection{Binding (Duct Tape)}
+\section{Extraordinary Items}
 
-\subsection{Explosive}
-
-\subsection{Fertilizer}
-
-\subsection{Rag}
-
-\subsection{Sugar}
-
-\section{Items}
+\subsection{Gaz Mask}
 
 \subsection{2x4}
 
@@ -106,7 +127,7 @@ The monsters are ordered by difficulty.
 
 \section{Runner}
 
-Grab you if you fail fight attack
+Grab you if you fail fight attack and if it's close enough.
 
 \section{Gang Member}
 
@@ -117,22 +138,5 @@ Grab you if you fail fight attack
 \section{Bloaters}
 
 \section{Firefly}
-
-%
-% COMBAT
-%
-\mainmatter
-\chapter{Combat}
-
-\subsection{Throw}
-
-\begin{rpg-list}
-    \item Auto sucess on Runners
-    \item Auto success on Clickers that aren\'t aware of you
-\end{rpg-list}
-
-\subsection{Conditions}
-
-\subsubsection{Dazed}
 
 \end{document}
